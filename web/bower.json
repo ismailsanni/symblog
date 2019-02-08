@@ -1,0 +1,21 @@
+{
+  "name": "web",
+  "homepage": "https://github.com/ismailsanni/symblog",
+  "authors": [
+    "Ismail Sanni <sanni920@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1"
+  }
+}
