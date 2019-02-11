@@ -42,9 +42,16 @@
     {% block content %}
 
     {% endblock %}
-
+     {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+            </div>
+        {% endfor %}
+        
+        
     {% block footer %}
     {% endblock %}
+       
     <footer class="container">
         <p>&copy; Company 2017-2018</p>
     </footer>
