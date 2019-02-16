@@ -51,6 +51,33 @@ class DefaultController extends Controller
         return $response;
 
     }
+     /**
+     * @Route("/post/new/", name="new_post")
+     */
+    public function newAction(Request $request)
+    {   
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $post = $form->getData();
+            $post->setCreatedAt(new \DateTime("now"));
+            $post->setUpdatedAt(new \DateTime("now"));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('success', 'Post created!');
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('default/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
     /**
      * @Route("/post/{id}", name="show_post")
      */
@@ -90,4 +117,6 @@ class DefaultController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+   
 }
