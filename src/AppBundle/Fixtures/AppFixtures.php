@@ -3,11 +3,19 @@
 namespace AppBundle\Fixtures;
 
 use AppBundle\Entity\Post;
+use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         // create 10 posts! Bam!
@@ -19,6 +27,13 @@ class AppFixtures extends Fixture
             $post->setUpdatedAt(new \DateTime());
             $manager->persist($post);
         }
+            $user = new User();
+            $user->setUsername('admin');
+            $user->setEmail('admin@example.com');
+            $password = $this->encoder->encodePassword($user, 'pass1234');
+            $user->setPassword($password);
+            
+            $manager->persist($user);
 
         $manager->flush();
     }

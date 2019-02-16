@@ -3,9 +3,17 @@
 security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
     providers:
-        in_memory:
-            memory: ~
+        our_db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -16,9 +24,20 @@ security:
         main:
             anonymous: ~
             # activate different ways to authenticate
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: homepage
+                failure_path: login
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            logout:
+                path:   /logout
+                target: /
+                
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+    
