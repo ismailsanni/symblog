@@ -30,6 +30,8 @@ security:
                 default_target_path: homepage
                 failure_path: login
 
+            access_denied_handler: app.security.access_denied_handler
+
             logout:
                 path:   /logout
                 target: /
