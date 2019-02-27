@@ -1,7 +1,6 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
-
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     encoders:
         AppBundle\Entity\User:
@@ -33,13 +32,14 @@ security:
             access_denied_handler: app.security.access_denied_handler
 
             logout:
-                path:   /logout
+                path: /logout
                 target: /
-                
+
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-    
+        - { path: ^/post/new/, roles: ROLE_ADMIN }
+        - { path: ^/post/edit/, roles: ROLE_ADMIN }

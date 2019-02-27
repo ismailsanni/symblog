@@ -12,7 +12,8 @@ class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder){
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
         $this->encoder = $encoder;
     }
 
@@ -21,19 +22,20 @@ class AppFixtures extends Fixture
         // create 10 posts! Bam!
         for ($i = 0; $i < 10; $i++) {
             $post = new Post();
-            $post->setTitle('Title'.$i);
+            $post->setTitle('Title' . $i);
             $post->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus non purus non varius. Phasellus tincidunt dui pharetra, dignissim risus eget, sodales est. Sed eget sollicitudin velit. Phasellus eu pretium neque, quis ullamcorper nibh. Vestibulum semper gravida lacus sit amet interdum. Ut id diam dolor. Curabitur ut erat nec turpis gravida vestibulum. ');
             $post->setCreatedAt(new \DateTime());
             $post->setUpdatedAt(new \DateTime());
             $manager->persist($post);
         }
-            $user = new User();
-            $user->setUsername('admin');
-            $user->setEmail('admin@example.com');
-            $password = $this->encoder->encodePassword($user, 'pass1234');
-            $user->setPassword($password);
-            
-            $manager->persist($user);
+        $user = new User();
+        $user->setUsername('admin');
+        $user->setEmail('admin@example.com');
+        $password = $this->encoder->encodePassword($user, 'pass1234');
+        $user->setPassword($password);
+        $user->setRoles(array('ROLE_USER', 'ROLE_ADMIN'));
+
+        $manager->persist($user);
 
         $manager->flush();
     }
