@@ -7,12 +7,10 @@ security:
             algorithm: bcrypt
 
     providers:
-        our_db_provider:
+        user_provider:
             entity:
                 class: AppBundle:User
                 property: username
-                # if you're using multiple entity managers
-                # manager_name: customer
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -23,17 +21,14 @@ security:
         main:
             anonymous: ~
             # activate different ways to authenticate
-            form_login:
-                login_path: login
-                check_path: login
-                default_target_path: homepage
-                failure_path: login
+            guard:
+                authenticators:
+                    - app.security.login_form_authenticator
 
             access_denied_handler: app.security.access_denied_handler
 
             logout:
                 path: /logout
-                target: /
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_ADMIN

@@ -27,6 +27,7 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
+    private $plainPassword;
     /**
      * @ORM\Column(type="string", length=254, unique=true)
      */
@@ -82,6 +83,8 @@ class User implements UserInterface, \Serializable
 
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
+
     }
 
     /** @see \Serializable::serialize() */
@@ -192,5 +195,16 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
     }
 }
