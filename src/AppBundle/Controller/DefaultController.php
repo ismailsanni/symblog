@@ -48,6 +48,9 @@ class DefaultController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -89,6 +92,8 @@ class DefaultController extends Controller
      */
     public function editAction(Request $request, Post $post)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 

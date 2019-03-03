@@ -28,12 +28,22 @@ class AppFixtures extends Fixture
             $post->setUpdatedAt(new \DateTime());
             $manager->persist($post);
         }
-        $user = new User();
-        $user->setUsername('admin');
-        $user->setEmail('admin@example.com');
-        $user->setPlainPassword('pass1234');
-        $user->setRoles(array('ROLE_USER', 'ROLE_ADMIN'));
 
+        // ADMIN USER
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setEmail('admin@example.com');
+        $admin->setPlainPassword('pass1234');
+        $admin->setRoles(array('ROLE_USER', 'ROLE_ADMIN'));
+
+        // ADMIN REGULAR USER
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@example.com');
+        $user->setPlainPassword('pass1234');
+        $user->setRoles(array('ROLE_USER'));
+
+        $manager->persist($admin);
         $manager->persist($user);
 
         $manager->flush();
