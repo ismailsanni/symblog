@@ -40,8 +40,11 @@ class DefaultController extends Controller
             'erros' => null,
             'articles' => json_decode($data),
         );
+        $response = new JsonResponse($response);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
-        return new JsonResponse($response, 200);
+        return $response;
+
     }
     /**
      * @Route("/post/new/", name="new_post")
