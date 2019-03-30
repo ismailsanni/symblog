@@ -23,7 +23,10 @@
                     <p>
                        {{ post.content|length > 100 ? post.content|slice(0, 100) ~ '...' :post.content }}
                     </p>
-                    <p><a class="btn btn-secondary" href="{{path('show_post', {id: post.id})}}" role="button">Read more &raquo;</a></p>
+                    <p><a class="btn btn-secondary" href="{{path('show_post', {id: post.id})}}" role="button">Read more &raquo;</a>
+                    <a class="btn btn-secondary" href="{{path('edit_post', {id: post.id})}}" role="button"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-secondary" href="{{path('delete_post', {id: post.id})}}" role="button"><i class="fas fa-trash-alt"></i></a>
+                    </p>
                 </div>
                 {% endfor %}
             </div>

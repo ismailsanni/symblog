@@ -117,5 +117,22 @@ class DefaultController extends Controller
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/post/delete/{id}", name="delete_post")
+     */
+    public function deleteAction($id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Post::class);
+        $post = $repo->findOneById($id);
+
+        $em->remove($post);
+        $em->flush();
+
+        $this->addFlash('success', 'Post deleted!');
+        return $this->redirectToRoute('homepage');
+    }
 
 }
